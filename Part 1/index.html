@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <title>A Simple App</title>
+
+    <link href='style.css' rel='stylesheet' type='text/css'>
+  </head>
+
+  <body>
+    <header>
+      <h1>Comments</h1>
+      <p>A simple app that allows a user to input comments</p>
+    </header>
+
+    <main>
+      <section class='comment-input'>
+        <p>Add Your Comment:</p>
+        <button data-bind="click: capitalizeLastName">Go caps</button>
+        <input><button>+</button>
+      </section>
+
+      <section class='comments'>
+        <p>This is the first comment!</p>
+        <p>Here's the second one!</p>
+        <p>And this is one more.</p>
+        <p>Here is another one!</p>
+      </section>
+    </main>
+    
+    <main>
+      <section class='comment-input'>
+        <p>Add Your Comment:</p>
+        <input data-bind="value: addedComment, enterKey: addCommentFromInputBox" />
+        <button data-bind="click: addCommentFromInputBox">+</button>
+      </section>
+
+      <section class='comments' data-bind="foreach: comments">
+          <p data-bind="text: comment"></p>
+      </section>
+    </main>
+
+    <footer>
+      <p>this work is released into the public domain</p>
+    </footer>
+
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
