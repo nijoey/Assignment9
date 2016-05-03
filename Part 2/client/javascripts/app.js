@@ -13,28 +13,28 @@ var Tab = function (name, selected) {
 };
 
 function ToDoAppViewModel() {
-    var self = this;
+    var pure = this;
 
-    self.selectedTab = ko.observable();
+    pure.selectedTab = ko.observable();
 
-    self.tabs = ko.observableArray([
-        new Tab('Newest', self.selectedTab),
-        new Tab('Oldest', self.selectedTab),
-        new Tab('Tags', self.selectedTab),
-        new Tab('Add', self.selectedTab)
+    pure.tabs = ko.observableArray([
+        new Tab('Newest', pure.selectedTab),
+        new Tab('Oldest', pure.selectedTab),
+        new Tab('Tags', pure.selectedTab),
+        new Tab('Add', pure.selectedTab)
     ]);
     
-    self.selectedTab(self.tabs()[0]);
+    pure.selectedTab(pure.tabs()[0]);
 
-    self.todos = ko.observableArray([]);
-    self.addedTodo_Description = ko.observable("");
-    self.addedTodo_Tags = ko.observable("");
-    self.tagsTabObjs = ko.observable([]);
+    pure.todos = ko.observableArray([]);
+    pure.addedTodo_Description = ko.observable("");
+    pure.addedTodo_Tags = ko.observable("");
+    pure.tagsTabObjs = ko.observable([]);
 
     function formatData() {
         var tags = [];
 
-        self.todos().forEach(function (toDo) {
+        pure.todos().forEach(function (toDo) {
             toDo.tags().forEach(function (tag) {
                 if (tags.indexOf(tag) === -1) {
                     tags.push(tag);
@@ -45,7 +45,7 @@ function ToDoAppViewModel() {
         var tagObjects = tags.map(function (tag) {
             var toDosUsingTag = [];
 
-            self.todos().forEach(function (toDo) {
+            pure.todos().forEach(function (toDo) {
                 if (toDo.tags.indexOf(tag) !== -1) {
                     toDosUsingTag.push(toDo.description);
                 }
@@ -53,18 +53,18 @@ function ToDoAppViewModel() {
 
             return { "name": tag, "toDos": toDosUsingTag };
         });
-        self.tagsTabObjs(tagObjects);
+        pure.tagsTabObjs(tagObjects);
     }
 
     $.getJSON("/todos.json", function (allData) {
         var mappedTodos = $.map(allData, function (item) { return new ToDo(item); });
-        self.todos(mappedTodos);
+        pure.todos(mappedTodos);
         formatData();
     });
 
-    self.addNewToDo = function () {
-        var description = self.addedTodo_Description,
-            tags = self.addedTodo_Tags,
+    pure.addNewToDo = function () {
+        var description = pure.addedTodo_Description,
+            tags = pure.addedTodo_Tags,
             split_tags = tags().split(','),
             newToDo = { "description": description, "tags": split_tags };
 
@@ -73,15 +73,15 @@ function ToDoAppViewModel() {
                 var mappedTodos = $.map(result, function (item) { 
                     return new ToDo(item); 
                 });
-                self.todos(mappedTodos);
+                pure.todos(mappedTodos);
                 formatData();
             });
         }else{
             window.alert("Error in adding");
         }
 
-        self.addedTodo_Description("");
-        self.addedTodo_Tags("");
+        pure.addedTodo_Description("");
+        pure.addedTodo_Tags("");
     };
 }
 
