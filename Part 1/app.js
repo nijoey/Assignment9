@@ -4,19 +4,19 @@ function AddComments(comment) {
 }
 
 function AppViewModel() {
-    var self = this;
-    self.comments = ko.observableArray([
+    var pure = this;
+    pure.comments = ko.observableArray([
         new AddComments("This is the first comment!"),
         new AddComments("Here's the second one!"),
         new AddComments("And this is one more."),
         new AddComments("Here is another one!")
     ]);
-    self.addedComment = ko.observable();
+    pure.addedComment = ko.observable();
 
-    self.addCommentFromInputBox = function () {
-        if (self.addedComment()!=="" && self.addedComment()!==undefined){
-            self.comments.push(new AddComments(self.addedComment()));
-            self.addedComment("");
+    pure.addCommentFromInputBox = function () {
+        if (pure.addedComment()!=="" && pure.addedComment()!==undefined){
+            pure.comments.push(new AddComments(pure.addedComment()));
+            pure.addedComment("");
         }
 
     };
