@@ -1,5 +1,5 @@
-/*globals ko*/
 /*globals $*/
+/*globals ko*/
 function ToDo(data) {
     this.description = ko.observable(data.description);
     this.tags = ko.observableArray(data.tags);
@@ -24,7 +24,6 @@ function ToDoAppViewModel() {
         new Tab('Add', self.selectedTab)
     ]);
     
-    //inialize to the first tab
     self.selectedTab(self.tabs()[0]);
 
     self.todos = ko.observableArray([]);
@@ -71,10 +70,14 @@ function ToDoAppViewModel() {
 
         if (description() !== "" && tags() !== "") {
             $.post("/todos", newToDo, function (result) {
-                var mappedTodos = $.map(result, function (item) { return new ToDo(item); });
+                var mappedTodos = $.map(result, function (item) { 
+                    return new ToDo(item); 
+                });
                 self.todos(mappedTodos);
                 formatData();
             });
+        }else{
+            window.alert("Error in adding");
         }
 
         self.addedTodo_Description("");
